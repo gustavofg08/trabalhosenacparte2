@@ -1,0 +1,7 @@
+
+.container {
+        display: flexbox;
+    justify-content: left;
+    align-items: center;
+    margin-left: 0%;
+}
