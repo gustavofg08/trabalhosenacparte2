@@ -17,41 +17,82 @@
     <h1>Carrinho de Compras</h1>
     <h2>Lista de itens</h2>
     <ul>
-       <li>  <div class="container">
-        <h4>CLT assinada falsa R$700</h4>
-            <img src="https://i.imgur.com/WUQmsDG.png" 
-            width="200"
-            height="200">
-         <button style="color: yellow;"><img src="https://i.imgur.com/W8fsSTq.png" width="15" height="15"></button> 1 <button style="color: yellow;"><img src="https://i.imgur.com/fIO9PlA.png" width="15" height="15"></button>
-        </li></div>
-        <li><h4>Atestado falso R$400</h4>
-            <img src="https://i.imgur.com/ywM0kbb.jpeg" width="200" height="200">
-        <button style="color: yellow;"><img src="https://i.imgur.com/W8fsSTq.png" width="15" height="15"></button>
-        1 <button><img src="https://i.imgur.com/fIO9PlA.png" width="15" height="15"></button>
-    </li>
         <li>
             <div class="container">
-                <h4>Boletim falso R$150</h4>
-                <img src="https://i.imgur.com/7d6ITEv.jpeg" width="200" height="200">
-                <button><img src="https://i.imgur.com/W8fsSTq.png" width="15" height="15"></button> 1 <button><img src="https://i.imgur.com/fIO9PlA.png" width="15" height="15"></button>
+                <h4>CLT assinada falsa <span id="valor1">R$700</span></h4>
+                <img src="https://i.imgur.com/WUQmsDG.png" width="200" height="200">
+                <button onclick="decrementar('valor1')">-</button> 
+                <span id="quantidade1">1</span> 
+                <button onclick="incrementar('valor1')">+</button>
             </div>
         </li>
         <li>
-            <h4>Dinheiro falso R$50 por nota</h4>
-            <img src="https://i.imgur.com/AEgZeLw.jpeg" width="300" height="200">
-            <button><img src="https://i.imgur.com/W8fsSTq.png" width="15" height="15"></button> 1 <button><img src="https://i.imgur.com/fIO9PlA.png" width="15" height="15"></button>
+            <div class="container">
+                <h4>Atestado falso <span id="valor2">R$400</span></h4>
+                <img src="https://i.imgur.com/ywM0kbb.jpeg" width="200" height="200">
+                <button onclick="decrementar('valor2')">-</button> 
+                <span id="quantidade2">1</span> 
+                <button onclick="incrementar('valor2')">+</button>
+            </div>
         </li>
-        <br>
         <li>
             <div class="container">
-                <div class="icon-cart">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
-                      </svg>
-                      <button style="background-color: yellow;">Finalizar compra</button>
-                </div>
-   
+                <h4>Boletim falso <span id="valor3">R$150</span></h4>
+                <img src="https://i.imgur.com/7d6ITEv.jpeg" width="200" height="200">
+                <button onclick="decrementar('valor3')">-</button> 
+                <span id="quantidade3">1</span> 
+                <button onclick="incrementar('valor3')">+</button>
+            </div>
+        </li>
+        <li>
+            <div class="container">
+                <h4>Dinheiro falso <span id="valor4">R$50 por nota</span></h4>
+                <img src="https://i.imgur.com/AEgZeLw.jpeg" width="300" height="200">
+                <button onclick="decrementar('valor4')">-</button> 
+                <span id="quantidade4">1</span> 
+                <button onclick="incrementar('valor4')">+</button>
+            </div>
         </li>
     </ul>
+
+    <div>
+        <h3>Total: <span id="total">R$0</span></h3>
+    </div>
+
+    <script>
+        function incrementar(id) {
+            var valorElement = document.getElementById(id);
+            var quantidadeElement = document.getElementById('quantidade' + id.charAt(id.length - 1));
+            var valor = parseFloat(valorElement.innerText.replace('R$', '').replace(' por nota', ''));
+            var quantidade = parseInt(quantidadeElement.innerText);
+            quantidade++;
+            quantidadeElement.innerText = quantidade;
+            atualizarTotal();
+        }
+
+        function decrementar(id) {
+            var valorElement = document.getElementById(id);
+            var quantidadeElement = document.getElementById('quantidade' + id.charAt(id.length - 1));
+            var valor = parseFloat(valorElement.innerText.replace('R$', '').replace(' por nota', ''));
+            var quantidade = parseInt(quantidadeElement.innerText);
+            if (quantidade > 0) {
+                quantidade--;
+                quantidadeElement.innerText = quantidade;
+                atualizarTotal();
+            }
+        }
+
+        function atualizarTotal() {
+            var total = 0;
+            var itens = document.querySelectorAll('[id^="valor"]');
+            var quantidades = document.querySelectorAll('[id^="quantidade"]');
+            for (var i = 0; i < itens.length; i++) {
+                var valor = parseFloat(itens[i].innerText.replace('R$', '').replace(' por nota', ''));
+                var quantidade = parseInt(quantidades[i].innerText);
+                total += valor * quantidade;
+            }
+            document.getElementById('total').innerText = 'R$' + total.toFixed(2);
+        }
+    </script>
 </body>
 </html>
